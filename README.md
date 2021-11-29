@@ -20,6 +20,4 @@ from the ```App.tsx``` file. All the content is located in this file only
 const APP_ID = 'YOUR APPLICATION ID HERE';
 var USER_ID = 'YOUR USER ID HERE';
 var ACCESS_TOKEN: any = null;
-var sb: SendBirdInstance;
-const USE_LOCAL_CACHE = true;
 ```
