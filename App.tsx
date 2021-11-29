@@ -5,8 +5,8 @@ import SendBird, { AdminMessage, BaseChannel, BaseMessageInstance, FileMessage, 
 /**
  * SET YOUR SENDBIRD INFORMATION HERE
  */
-const APP_ID = '0257CC38-F659-43BF-881D-87E3C8253E4C';
-var USER_ID = 'walter';
+const APP_ID = 'YOUR APPLICATION ID HERE';
+var USER_ID = 'YOUR USER ID HERE';
 var ACCESS_TOKEN: any = null;
 var sb: SendBirdInstance;
 const USE_LOCAL_CACHE = true;
@@ -196,10 +196,14 @@ function sendMessage(groupChannel: any, messageText: string, callback: any) {
  * Let's begin...
  */
 initAndConnect((user: User) => {
-    console.log('Connected to sendbird', user);
-    sb.setBackgroundState();            // You appear offline but Local Caching is going to the server to get the information
-    console.log('Send to background');
+    console.log(`
+        Connected to sendbird. 
+        Select a channel from the list to see its messages 
+        from CACHE and from API (server)`, user);
 })
+
+
+
 
 
 export default function App() {
@@ -273,8 +277,6 @@ export default function App() {
         </View>
     );
 }
-
-
 
 const styles = StyleSheet.create({
     container: {
