@@ -10,7 +10,6 @@ var USER_ID = 'walter';
 var ACCESS_TOKEN: any = null;
 var sb: SendBirdInstance;
 const USE_LOCAL_CACHE = true;
-const CONNECT_TO_CHAT = true;
 
 
 /**
@@ -19,9 +18,6 @@ const CONNECT_TO_CHAT = true;
 function initAndConnect(callback: any) {
     // Init Sendbird
     sb = new SendBird({ appId: APP_ID, localCacheEnabled: USE_LOCAL_CACHE });
-    if (!CONNECT_TO_CHAT) {
-        USER_ID = 'tokenuser'; // this user has a token
-    }
     // Connect to chat
     sb.connect(USER_ID, ACCESS_TOKEN, (user: User, error: SendBirdError) => {
         if (error) {
@@ -29,10 +25,6 @@ function initAndConnect(callback: any) {
             callback(null);
         } else {
             callback(user);
-            setTimeout(() => {
-                // sb.setBackgroundState();
-                // console.log('Send to background');
-            }, 3000)
         }
     })
 }
@@ -205,6 +197,8 @@ function sendMessage(groupChannel: any, messageText: string, callback: any) {
  */
 initAndConnect((user: User) => {
     console.log('Connected to sendbird', user);
+    sb.setBackgroundState();            // You appear offline but Local Caching is going to the server to get the information
+    console.log('Send to background');
 })
 
 
@@ -253,13 +247,16 @@ export default function App() {
             <View >
                 <Text>Sendbird test with React-Native and Local Cache</Text>
                 <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, paddingBottom: '1rem' }} />
+                
                 {/* CHANNELS LIST */}
                 <Text style={{ paddingBottom: '1rem', paddingTop: '1rem' }}>{channelList ? 'Total group channels: ' + channelList.length : 'Loading channels...'}</Text>
                 {channelList ? <ChannelList /> : <Text>No channels</Text>}
                 <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, paddingBottom: '1rem', paddingTop: '1rem' }} />
+                
                 {/* MESSAGES */}
                 {messagesRecovered ? <MessageList messages={messagesRecovered} /> : <Text style={{ paddingTop: '1rem' }}>Select a channel to see its messages</Text>}
                 <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, paddingBottom: '1rem' }} />
+                
                 {/* SEND MESSAGE */}
                 <TextInput
                     style={styles.input}
@@ -271,6 +268,7 @@ export default function App() {
                     title="Send message"
                     onPress={() => sendMessage(channelSelected, text, () => { onChangeText('') })}
                 />
+
             </View>
         </View>
     );
