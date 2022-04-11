@@ -26,8 +26,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 /**
  * SET YOUR SENDBIRD INFORMATION HERE
  */
-const APP_ID = "YOUR APPLICATION ID HERE";
-var USER_ID = "YOUR USER ID HERE";
+const APP_ID = "6A6CF887-E6F6-4763-84B6-BEFD2410EE42";
+var USER_ID = "walter2";
 var ACCESS_TOKEN: any = null;
 var sb: SendBirdInstance;
 const USE_LOCAL_CACHE = true;
@@ -306,13 +306,12 @@ export default function App() {
         <View
           style={{
             borderBottomColor: "black",
-            borderBottomWidth: 1,
-            paddingBottom: "1rem",
+            borderBottomWidth: 1            
           }}
         />
 
         {/* CHANNELS LIST */}
-        <Text style={{ paddingBottom: "1rem", paddingTop: "1rem" }}>
+        <Text>
           {channelList
             ? "Total group channels: " + channelList.length
             : "Loading channels..."}
@@ -321,9 +320,7 @@ export default function App() {
         <View
           style={{
             borderBottomColor: "black",
-            borderBottomWidth: 1,
-            paddingBottom: "1rem",
-            paddingTop: "1rem",
+            borderBottomWidth: 1
           }}
         />
 
@@ -331,15 +328,14 @@ export default function App() {
         {messagesRecovered ? (
           <MessageList messages={messagesRecovered} />
         ) : (
-          <Text style={{ paddingTop: "1rem" }}>
+          <Text>
             Select a channel to see its messages
           </Text>
         )}
         <View
           style={{
             borderBottomColor: "black",
-            borderBottomWidth: 1,
-            paddingBottom: "1rem",
+            borderBottomWidth: 1
           }}
         />
 
@@ -369,9 +365,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
-  },
-  paddingBottom: {
-    paddingBottom: "1rem",
   },
   input: {
     height: 40,
