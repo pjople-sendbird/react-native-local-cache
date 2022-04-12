@@ -40,7 +40,7 @@ function initAndConnect(callback: any) {
   sb = new SendBird({ appId: APP_ID, localCacheEnabled: USE_LOCAL_CACHE });
   sb.useAsyncStorageAsDatabase(AsyncStorage);
   // Connect to chat
-  sb.connect(USER_ID, ACCESS_TOKEN, (user: User, error: SendBirdError) => {
+  return sb.connect(USER_ID, ACCESS_TOKEN, (user: User, error: SendBirdError) => {
     if (error) {
       console.log(
         "Unable to connect. You need to get a first connection to access Local Cache"
@@ -236,34 +236,34 @@ function sendMessage(groupChannel: any, messageText: string, callback: any) {
   );
 }
 
-/**
- * Let's begin...
- */
-initAndConnect((user: User) => {
-  console.log(
-    `
-        Connected to sendbird. 
-        Select a channel from the list to see its messages 
-        from CACHE and from API (server)`,
-    user
-  );
-});
-
 export default function App() {
   const [channelList, setChannelList] = useState<any>(null);
   const [messagesRecovered, setMessagesRecovered] = useState<any>(null);
   const [text, onChangeText] = useState("");
   const [channelSelected, setChannelSelected] = useState(null);
 
+  /**
+   * Let's begin...
+   */
   useEffect(() => {
-    getChannelList((groupChannels: Array<any>) => {
-      setChannelList(groupChannels);
-    });
+    initAndConnect((user: User) => {
+      console.log(
+        `
+              Connected to sendbird. 
+              Select a channel from the list to see its messages 
+              from CACHE and from API (server)`,
+        user
+      )
+    }).then(() => {
+        getChannelList((groupChannels: Array<any>) => {
+            setChannelList(groupChannels);
+          });    
+    })
   }, []);
 
   const ChannelList = () => {
     return (
-      <div>
+      <>
         <FlatList
           data={channelList}
           renderItem={(itemSelected: any) => (
@@ -283,7 +283,7 @@ export default function App() {
           )}
           keyExtractor={(item) => item.url}
         />
-      </div>
+      </>
     );
   };
 
@@ -306,7 +306,7 @@ export default function App() {
         <View
           style={{
             borderBottomColor: "black",
-            borderBottomWidth: 1            
+            borderBottomWidth: 1,
           }}
         />
 
@@ -320,7 +320,7 @@ export default function App() {
         <View
           style={{
             borderBottomColor: "black",
-            borderBottomWidth: 1
+            borderBottomWidth: 1,
           }}
         />
 
@@ -328,14 +328,12 @@ export default function App() {
         {messagesRecovered ? (
           <MessageList messages={messagesRecovered} />
         ) : (
-          <Text>
-            Select a channel to see its messages
-          </Text>
+          <Text>Select a channel to see its messages</Text>
         )}
         <View
           style={{
             borderBottomColor: "black",
-            borderBottomWidth: 1
+            borderBottomWidth: 1,
           }}
         />
 
