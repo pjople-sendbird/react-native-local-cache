@@ -26,8 +26,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 /**
  * SET YOUR SENDBIRD INFORMATION HERE
  */
-const APP_ID = "6A6CF887-E6F6-4763-84B6-BEFD2410EE42";
-var USER_ID = "walter2";
+const APP_ID = "YOUR SENDBIRD APPLICATION ID HERE";
+var USER_ID = "YOUR USER ID HERE";
 var ACCESS_TOKEN: any = null;
 var sb: SendBirdInstance;
 const USE_LOCAL_CACHE = true;
